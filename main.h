@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/wait.h>
+extern char **environ;
 
 void remove_newline(char *str);
 char **split_string(char *str);

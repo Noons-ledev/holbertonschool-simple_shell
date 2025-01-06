@@ -4,32 +4,8 @@
 #include <string.h>
 #include "main.h"
 
-extern char **environ;
 /**
-*_getenv-get the value of an environment variable
-*@name: Name of the variable to get its value
-*Return: Pointer to the value of the variable
-*/
-char *_getenv(const char *name)
-{
-int i = 0;
-size_t name_len = strlen(name);
-if (name == NULL || environ == NULL)
-	{
-	return NULL;
-	}
-	while	(environ[i])
-		{
-	if (strncmp(environ[i], name, name_len) == 0 && environ[i][name_len] == '=')
-		{
-		return environ[i] + name_len + 1;
-		}
-		i++;
-		}
-		return NULL;
-}
-/**
-*split_string: Splits a string in elements of an array
+*split_string- Splits a string in elements of an array
 *@str: String to split
 *Return: array of pointers (pointer to pointer)
 */
@@ -66,7 +42,7 @@ int exec_loop(void)
 char *command = NULL;
 size_t len = 0;
 int id, status;
-while(1)
+while (1)
 {
 printf("#cisfun$ ");
 
@@ -83,16 +59,11 @@ break;
 free(command);
 return (0);
 }
-
-void remove_newline(char *str) 
-{
-    size_t len = strlen(str);
-    if (len > 0 && str[len - 1] == '\n') 
-	{
-        str[len - 1] = '\0';
-    }
-}
-
+/**
+*exec_command-Executes the command if it is valid
+*@command: Command passed as argument to be executed
+*Return: Nothing void
+*/
 void exec_command(char *command)
 {
 char **tokens;
@@ -107,16 +78,20 @@ id = fork();
 	{
 		wait(&status);
 	}
-else 
+else
 	{
 	if (execve(tokens[0], tokens, NULL) == -1)
 	{
-		printf("./shell No such file or directory\n"); 
+		printf("./shell No such file or directory\n");
 	}
 	exit(EXIT_FAILURE);
 }
 free(tokens);
 }
+/**
+*exec_no_loop- Executes in non interactive mode
+*Return: Nothing void
+*/
 int exec_no_loop(void)
 {
 char *command = NULL;
