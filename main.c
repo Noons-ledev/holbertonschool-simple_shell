@@ -16,8 +16,8 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	if (isatty(STDIN_FILENO))
-	exec_loop();
+	exec_loop(argv[0]);
 	else
-	exec_no_loop();
+	exec_no_loop(argv[0]);
 	return (0);
 }

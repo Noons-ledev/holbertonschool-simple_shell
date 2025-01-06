@@ -11,9 +11,9 @@ char **split_string(char *str);
 int comm_exec(char **command);
 char *find_command_path(char *command);
 char *_getenv(const char *name);
-int exec_loop(void);
-int exec_no_loop(void);
-void exec_command(char *command);
+int exec_loop(char *program_name);
+int exec_no_loop(char *program_name);
+void exec_command(char *command, char *program_name);
 
 #endif
 

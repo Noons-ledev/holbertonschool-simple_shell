@@ -35,9 +35,10 @@ return (tokens_array);
 }
 /**
 *exec_loop- executes the prompt for interacting with the process
+*@program_name: argv[0]
 *Return: 0 for success
 */
-int exec_loop(void)
+int exec_loop(char *program_name)
 {
 char *command = NULL;
 size_t len = 0;
@@ -50,7 +51,7 @@ if (getline(&command, &len, stdin) > 0)
 	remove_newline(command);
 	if (strcmp(command, "exit") == 0)
 	break;
-	exec_command(command);
+	exec_command(command, program_name);
 	}
 else
 break;
@@ -61,9 +62,10 @@ return (0);
 /**
 *exec_command-Executes the command if it is valid
 *@command: Command passed as argument to be executed
+*@program_name: argv[0]
 *Return: Nothing void
 */
-void exec_command(char *command)
+void exec_command(char *command, char *program_name)
 {
 char **tokens;
 int id, status;
@@ -81,17 +83,17 @@ else
 	{
 	if (execve(tokens[0], tokens, NULL) == -1)
 	{
-		printf("./shell No such file or directory\n");
+		printf("%s: No such file or directory\n", program_name);
 	}
-	exit(EXIT_FAILURE);
 }
 free(tokens);
 }
 /**
 *exec_no_loop- Executes in non interactive mode
+*@program_name: argv[0]
 *Return: Nothing void
 */
-int exec_no_loop(void)
+int exec_no_loop(char *program_name)
 {
 char *command = NULL;
 size_t len = 0;
@@ -103,7 +105,7 @@ if (getline(&command, &len, stdin) > 0)
 	free(command);
 	exit(0);
 	}
-	exec_command(command);
+	exec_command(command, program_name);
 	}
 else
 perror("message d'erreur");
