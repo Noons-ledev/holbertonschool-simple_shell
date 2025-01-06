@@ -41,7 +41,6 @@ int exec_loop(void)
 {
 char *command = NULL;
 size_t len = 0;
-int id, status;
 while (1)
 {
 printf("#cisfun$ ");
