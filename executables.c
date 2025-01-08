@@ -23,7 +23,6 @@ void exec_command(char *command, char *program_name)
 	else
 		{
 		absolute_path = find_executable(tokens[0]);
-		free(tokens);
 		}	
 	if (absolute_path)
 	{
@@ -43,6 +42,7 @@ void exec_command(char *command, char *program_name)
 	else if (!absolute_path)
 		printf("%s: Command not found\n", program_name);
 	free(absolute_path);
+	free(tokens);
 }
 /**
  *exec_loop- Infinite loop that process to execute user inputs
