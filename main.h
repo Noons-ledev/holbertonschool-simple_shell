@@ -1,15 +1,13 @@
 #ifndef main_h
 #define main_h
+extern char **environ;
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/wait.h>
-
-void remove_newline(char *str);
 char **split_string(char *str);
-int comm_exec(char **command);
-char *find_command_path(char *command);
+void remove_newline(char *str);
+void exec_command(char *command, char *program_name);
+int exec_loop(char *program_name);
+char *find_executable(char *str);
+char *_getenv(const char *name);
+int exec_no_loop(char *program_name);
 
 #endif
