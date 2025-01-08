@@ -19,9 +19,12 @@ void exec_command(char *command, char *program_name)
 	if (tokens == NULL)
 		return;
 	if (tokens[0][0] == '/' || tokens[0][0] == '.')
-		absolute_path = tokens[0];
+		absolute_path = strdup(tokens[0]);
 	else
+		{
 		absolute_path = find_executable(tokens[0]);
+		free(tokens);
+		}	
 	if (absolute_path)
 	{
 		if (access(absolute_path, X_OK) == 0)
@@ -39,7 +42,6 @@ void exec_command(char *command, char *program_name)
 	}
 	else if (!absolute_path)
 		printf("%s: Command not found\n", program_name);
-	free(tokens);
 	free(absolute_path);
 }
 /**
@@ -88,7 +90,6 @@ int exec_no_loop(char *program_name)
 		}
 		exec_command(command, program_name);
 	}
-	else
 	free(command);
 	return (0);
 }
