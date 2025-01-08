@@ -125,3 +125,16 @@ char **split_string(char *str)
 		}
 		return (NULL);
 	}
+/**
+*free_tokens-frees an array of array
+*@tokens: Array of array
+*Return: nothing void
+*/
+void free_array(char **tokens)
+{
+	int i;
+
+	for (i = 0; tokens[i] != NULL; i++)
+		free(tokens[i]);
+	free(tokens);
+}
