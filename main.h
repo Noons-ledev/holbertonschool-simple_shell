@@ -9,5 +9,6 @@ int exec_loop(char *program_name);
 char *find_executable(char *str);
 char *_getenv(const char *name);
 int exec_no_loop(char *program_name);
+void free_array(char **tokens);
 
 #endif
