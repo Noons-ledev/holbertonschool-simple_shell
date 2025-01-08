@@ -23,7 +23,7 @@ void exec_command(char *command, char *program_name)
 	else
 		{
 		absolute_path = find_executable(tokens[0]);
-		}	
+		}
 	if (absolute_path)
 	{
 		if (access(absolute_path, X_OK) == 0)
