@@ -5,7 +5,7 @@
 #include "main.h"
 
 /**
- *main-entry of program 
+ *main-entry of program
  * @argc: arg count
  * @argv: array of pointer to args
  * Return: Always 0 for success
