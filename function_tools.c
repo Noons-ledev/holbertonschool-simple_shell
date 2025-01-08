@@ -32,7 +32,6 @@ char **split_string(char *str)
 		token = strtok(NULL, " ");
 		i++;
 	}
-	tokens_array[i] = NULL;
 	return (tokens_array);
 }
 
