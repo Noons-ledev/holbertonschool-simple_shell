@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "main.h"
 
 /**
  *exec_command- Parse a command and if valid, executes it
  *@command: input given as a command to exec
  *@program_name: Name of the program
+ *Return: Nothing void
  */
 void exec_command(char *command, char *program_name)
 {
