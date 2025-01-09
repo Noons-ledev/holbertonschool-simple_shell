@@ -55,19 +55,28 @@ int exec_loop(char *program_name)
 {
 	char *command = NULL;
 	size_t len = 0;
+	ssize_t read_bytes;
 
 	while (1)
 	{
 		printf("#cisfun$ ");
-		if (getline(&command, &len, stdin) > 0)
+		read_bytes = getline(&command, &len, stdin);
+		if (read_bytes > 0)
 		{
 			remove_newline(command);
+			if ((size_t)strspn(command, " ") ==(size_t)strlen(command))
+				continue;
 			if (strcmp(command, "exit") == 0)
 				break;
 			exec_command(command, program_name);
 		}
-		else
+		else if (read_bytes == 0)
+		continue;
+		else if (read_bytes < 0)
+		{
+			perror("Exiting shell...");
 			break;
+		}
 	}
 	free(command);
 	return (0);
@@ -81,10 +90,17 @@ int exec_no_loop(char *program_name)
 {
 	char *command = NULL;
 	size_t len = 0;
+	ssize_t read_bytes;
 
-	if (getline(&command, &len, stdin) > 0)
+	read_bytes = getline(&command, &len, stdin);
+	if (read_bytes > 0)
 	{
 		remove_newline(command);
+		if ((size_t)strspn(command, " ") == (size_t)strlen(command) || strlen(command) == 0)
+		{
+			printf("\n");
+			exit(0);
+		}
 		if (strcmp(command, "exit") == 0)
 		{
 			free(command);
