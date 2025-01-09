@@ -68,9 +68,15 @@ int exec_loop(char *program_name)
 		{
 			remove_newline(command);
 			if (_strspn(command, " ") == strlen(command))
-			continue;
+				continue;
 			if (strcmp(command, "exit") == 0)
 				break;
+			if (strcmp(command, "env") == 0)
+				{
+					printenv();
+					free(command);
+					exit(0);
+				}
 			exec_command(command, program_name);
 		}
 		else if (read_bytes == 0)
@@ -102,6 +108,7 @@ int exec_no_loop(char *program_name)
 		if ((strlen(command) == 0) || (_strspn(command, " ") == strlen(command)))
 		{
 			printf("\n");
+			free(command);
 			exit(0);
 		}
 		if (strcmp(command, "exit") == 0)
@@ -109,6 +116,13 @@ int exec_no_loop(char *program_name)
 			free(command);
 			exit(0);
 		}
+		if (strcmp(command, "env") == 0)
+		{
+			printenv();
+			free(command);
+			exit(0);
+		}
+
 		exec_command(command, program_name);
 	}
 	free(command);
@@ -154,3 +168,18 @@ int exec_no_loop(char *program_name)
 		free(path_copy);
 		return (NULL);
 	}
+/**
+ *printenv- Print environment variables such as in bash 
+ *Return: Nothing void
+ */
+void printenv(void)
+{
+int i = 0;
+char **env = environ ;
+
+	while (env[i])
+	{
+		printf("%s\n", env[i]);
+		i++;
+	}
+}
