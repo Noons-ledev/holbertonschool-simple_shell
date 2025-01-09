@@ -96,7 +96,7 @@ int exec_no_loop(char *program_name)
 	ssize_t read_bytes;
 
 	read_bytes = getline(&command, &len, stdin);
-	while (read_bytes != -1)
+	if (read_bytes != -1)
 	{
 		remove_newline(command);
 		if ((strlen(command) == 0) || (_strspn(command, " ") == strlen(command)))
