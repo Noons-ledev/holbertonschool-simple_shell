@@ -32,7 +32,10 @@ void exec_command(char *command, char *program_name)
 		{
 			id = fork();
 			if (id == -1)
+			{
+				perror("fork :");
 				return;
+			}
 			else if (id != 0)
 				wait(&status);
 			else if (id == 0)
@@ -64,8 +67,8 @@ int exec_loop(char *program_name)
 		if (read_bytes > 0)
 		{
 			remove_newline(command);
-			if ((size_t)strspn(command, " ") ==(size_t)strlen(command))
-				continue;
+			if (_strspn(command, " ") == strlen(command))
+			continue;
 			if (strcmp(command, "exit") == 0)
 				break;
 			exec_command(command, program_name);
@@ -93,10 +96,10 @@ int exec_no_loop(char *program_name)
 	ssize_t read_bytes;
 
 	read_bytes = getline(&command, &len, stdin);
-	if (read_bytes > 0)
+	while (read_bytes != -1)
 	{
 		remove_newline(command);
-		if ((size_t)strspn(command, " ") == (size_t)strlen(command) || strlen(command) == 0)
+		if ((strlen(command) == 0) || (_strspn(command, " ") == strlen(command)))
 		{
 			printf("\n");
 			exit(0);
@@ -111,3 +114,43 @@ int exec_no_loop(char *program_name)
 	free(command);
 	return (0);
 }
+
+/**
+	 *find_executable- search for a file in the PATH
+	 *@str: File to search for
+	 *Return: Absolute path of the file
+	 */
+	char *find_executable(char *str)
+	{
+		char *path;
+		char *path_copy;
+		char *directory;
+		char *final_path;
+
+		path = _getenv("PATH");
+		if (path == NULL)
+			return (NULL);
+		path_copy = strdup(path);
+		if (path_copy == NULL)
+			return (NULL);
+		directory = strtok(path_copy, ":");
+		while (directory != NULL)
+		{
+			final_path = malloc((strlen(directory) + (strlen(str)) + 2) * sizeof(char));
+			if (final_path == NULL)
+			{
+				free(path_copy);
+				return (NULL);
+			}
+			sprintf(final_path, "%s/%s", directory, str);
+			if (access(final_path, X_OK) == 0)
+			{
+				free(path_copy);
+				return (final_path);
+			}
+			free(final_path);
+			directory = strtok(NULL, ":");
+		}
+		free(path_copy);
+		return (NULL);
+	}

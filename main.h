@@ -10,5 +10,6 @@ char *find_executable(char *str);
 char *_getenv(const char *name);
 int exec_no_loop(char *program_name);
 void free_array(char **tokens);
+size_t _strspn(char *str, char *models);
 
 #endif

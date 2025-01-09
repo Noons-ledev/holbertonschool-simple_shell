@@ -61,45 +61,7 @@ char **split_string(char *str)
 		}
 	}
 
-	/**
-	 *find_executable- search for a file in the PATH
-	 *@str: File to search for
-	 *Return: Absolute path of the file
-	 */
-	char *find_executable(char *str)
-	{
-		char *path;
-		char *path_copy;
-		char *directory;
-		char *final_path;
-
-		path = _getenv("PATH");
-		if (path == NULL)
-			return (NULL);
-		path_copy = strdup(path);
-		if (path_copy == NULL)
-			return (NULL);
-		directory = strtok(path_copy, ":");
-		while (directory != NULL)
-		{
-			final_path = malloc((strlen(directory) + (strlen(str)) + 2) * sizeof(char));
-			if (final_path == NULL)
-			{
-				free(path_copy);
-				return (NULL);
-			}
-			sprintf(final_path, "%s/%s", directory, str);
-			if (access(final_path, X_OK) == 0)
-			{
-				free(path_copy);
-				return (final_path);
-			}
-			free(final_path);
-			directory = strtok(NULL, ":");
-		}
-		free(path_copy);
-		return (NULL);
-	}
+	
 	/**
 	 *_getenv-get the value of an environment variable
 	 *@name: Name of the variable to get its value
@@ -137,4 +99,28 @@ void free_array(char **tokens)
 	for (i = 0; tokens[i] != NULL; i++)
 		free(tokens[i]);
 	free(tokens);
+}
+/**
+ *_strspn- return nb of char from str consecutively corresponding to those from models
+ *@str: String passed to search on
+ *@models: String used as a reference pattern
+ *Return : Nb of corresponding consecutive chars
+ */
+size_t _strspn(char *str, char *models)
+{
+	char *cursor1, *cursor2 ;
+	size_t count = 0;
+	for (cursor1 = str; *cursor1 != '\0'; cursor1++)
+		{
+			for (cursor2 = models; *cursor2 != '\0'; cursor2++)
+			{
+				if (*cursor1 == *cursor2)
+				break;
+			}
+			if (*cursor2 == '\0')
+			return (count);
+
+			count++;
+		}
+		return (count);
 }
