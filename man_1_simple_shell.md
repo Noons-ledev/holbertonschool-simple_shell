@@ -64,7 +64,7 @@
 
 ## AUTHORS
 
-  BRIET Noah, GLE Rosario
+  BRIET Noah
 
 ## SEE ALSO
 
