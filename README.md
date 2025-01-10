@@ -67,5 +67,4 @@ void printenv(void);
 int main(int argc, char**argv);
 ```
 ## Contributors
-Rosario Glé
 Noah Briet
