@@ -75,7 +75,7 @@ int exec_loop(char *program_name)
 				{
 					printenv();
 					free(command);
-					exit(0);
+					break;
 				}
 			exec_command(command, program_name);
 		}
