@@ -26,7 +26,7 @@ char **split_string(char *str)
 	tokens_array = malloc((words_number + 1) * sizeof(char *));
 	if (tokens_array == NULL)
 		return (NULL);
-	token = strtok(str, " ");
+	token = strtok(str, "  \n");
 	while (token)
 	{
 		tokens_array[i] = strdup(token);

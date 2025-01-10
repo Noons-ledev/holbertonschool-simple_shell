@@ -70,7 +70,10 @@ int exec_loop(char *program_name)
 			if (_strspn(command, " ") == strlen(command))
 				continue;
 			if (strcmp(command, "exit") == 0)
+				{
+				perror("");
 				break;
+				}
 			if (strcmp(command, "env") == 0)
 				{
 					printenv();
